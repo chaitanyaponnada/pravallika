@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Pravallika 🎀✨</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #fffafb;
+            --accent-pink: #ff6b8b;
+            --deep-rose: #4a3a3f;
+            --glass-white: rgba(255, 255, 255, 0.85);
+            --shadow: 0 20px 40px rgba(255, 182, 193, 0.2);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            background: radial-gradient(circle at top right, #fff5f7, #fce4ec);
+            color: var(--deep-rose);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Responsive Container */
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        .cursive {
+            font-family: 'Alex Brush', cursive;
+            color: var(--accent-pink);
+        }
+
+        .heading-bold {
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Welcome Screen */
+        #welcome {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Main Message Page */
+        #messagePage {
+            padding-top: 50px;
+        }
+
+        /* High-End Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        @media (max-width: 992px) {
+            .hero-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text { order: 2; }
+            .hero-img-box { order: 1; }
+        }
+
+        .hero-img-box img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 40px;
+            border: 15px solid white;
+            box-shadow: var(--shadow);
+            transform: rotate(-2deg);
+            transition: var(--transition);
+        }
+
+        .hero-img-box img:hover {
+            transform: rotate(0) scale(1.02);
+        }
+
+        /* Timeline / Memory Row Styling */
+        .memory-row {
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            padding: 100px 0;
+        }
+
+        .memory-item {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* "Photos First" Logic for Desktop Alternating */
+        .memory-item.reverse {
+            grid-template-columns: 1.2fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .memory-item, .memory-item.reverse {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+        }
+
+        .memory-img-wrapper img {
+            width: 100%;
+            border-radius: 30px;
+            border: 10px solid white;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .memory-img-wrapper img:hover {
+            box-shadow: 0 30px 60px rgba(255, 107, 139, 0.3);
+        }
+
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow);
+        }
+
+        .memory-text p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #554449;
+        }
+
+        /* Buttons */
+        button {
+            padding: 22px 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 100px;
+            background: linear-gradient(135deg, #ff8da1 0%, #ff6b8b 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 139, 0.4);
+            transition: var(--transition);
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 139, 0.5);
+        }
+
+        .scroll-down {
+            margin-top: 30px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .video-wrapper {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 30px;
+            border: 12px solid white;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="bgConfetti" class="confetti-canvas"></canvas>
+
+    <div class="section-container" id="welcome">
+        <div data-aos="zoom-in">
+            <h1 class="heading-bold" style="font-size: 1.5rem; color: var(--accent-pink);">HAPPY BIRTHDAY</h1>
+            <h1 class="cursive" style="font-size: clamp(80px, 15vw, 160px); margin: -10px 0 20px 0;">Pravallika</h1>
+            <button onclick="startExperience()">Open Your Surprise 💌</button>
+        </div>
+    </div>
+
+    <div id="messagePage" class="hidden">
+        
+        <section class="hero">
+            <div class="section-container">
+                <div class="hero-layout">
+                    <div class="hero-img-box" data-aos="fade-up">
+                        <img src="photo2.jpg" alt="Pravallika">
+                    </div>
+                    <div class="hero-text glass-card" data-aos="fade-left">
+                        <h1 class="heading-bold" style="font-size: 2rem; margin-bottom: 10px;">For You, Angel</h1>
+                        <h2 class="cursive" style="font-size: 3.5rem; margin-bottom: 30px;">Special to me...</h2>
+                        
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 20px; font-weight: 600; font-size: 1.2rem;">🌸 You understand me perfectly</li>
+                            <li style="margin-bottom: 20px; font-weight: 600; font-size: 1.2rem;">🌈 You brighten my worst days</li>
+                            <li style="margin-bottom: 20px; font-weight: 600; font-size: 1.2rem;">🫶 You are my safest place</li>
+                            <li style="font-weight: 600; font-size: 1.2rem;">👑 You deserve the universe</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scroll-down" onclick="scrollToMemories()" style="text-align: center;">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="var(--accent-pink)">
+                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-container" id="memories">
+            <div class="memory-row">
+                
+                <div class="memory-item">
+                    <div class="memory-img-wrapper" data-aos="fade-right">
+                        <img src="photo1.jpg" alt="Memory 1">
+                    </div>
+                    <div class="memory-text glass-card" data-aos="fade-left">
+                        <p>Happiest Birthday, my dearest Pravallika 🎂🎉💖✨! On this beautiful day 🌸🌞, I just want you to know how incredibly special you are to me 🫶💞. May this year bring you endless happiness 😊🌷, success in everything you dream of 🎓🌟, love that surrounds you always 💕👑, and blessings that overflow every single day 🌺🙏✨.</p>
+                    </div>
+                </div>
+
+                <div class="memory-item reverse">
+                    <div class="memory-img-wrapper" data-aos="fade-left">
+                        <img src="photo3.jpg" alt="Memory 2">
+                    </div>
+                    <div class="memory-text glass-card" data-aos="fade-right">
+                        <p>No matter how far life takes us 🌍✈️, a part of my heart will always carry your name 🤍💫 and hold you close forever 🫂💖. We may not talk every single day 📱💬, but not a day passes without you crossing my mind 🌼💭 and bringing a soft smile to my face 😊🌈.</p>
+                    </div>
+                </div>
+
+                <div class="memory-item">
+                    <div class="memory-img-wrapper" data-aos="fade-right">
+                        <img src="photo4.jpg" alt="Memory 3">
+                    </div>
+                    <div class="memory-text glass-card" data-aos="fade-left">
+                        <p>Thank you for the laughter that healed my worst days 😂💛, the silent moments that understood me without explanations 🤫💕, and the memories that still warm my heart every time I think of them 🥹🌸. You have been my strength when I felt weak 💪🌻, my comfort when I felt lost 🌊🤍, and my happiness in the simplest moments 🌷✨.</p>
+                    </div>
+                </div>
+
+                <div class="memory-item reverse">
+                    <div class="memory-img-wrapper" data-aos="fade-left">
+                        <img src="photo5.jpg" alt="Memory 4">
+                    </div>
+                    <div class="memory-text glass-card" data-aos="fade-right">
+                        <p>If life ever feels heavy or overwhelming 🌧️😔, please remember you are stronger than you think 💎🔥, braver than your fears 🦋🌟, and never alone because I am always silently praying for your happiness 🙏💖. I miss you more than words can ever explain 🥺💗, I believe in you with all my heart 💓🌟.</p>
+                    </div>
+                </div>
+
+                <div class="memory-item">
+                    <div class="memory-img-wrapper" data-aos="fade-right">
+                        <img src="photo6.jpg" alt="Memory 5">
+                    </div>
+                    <div class="memory-text glass-card" data-aos="fade-left">
+                        <p>I will forever be grateful for you 🌈🤍. May this year gift you new beginnings 🌅💫, unforgettable memories 📸🎊, and all the happiness your soul truly deserves 💝🌺💎. Always remember, my beautiful Pravallika 🥳👑, you will forever have a special place in my heart 🫶💖✨.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="final-area section-container" id="finalTrigger" style="padding-bottom: 100px;">
+            <div style="text-align: center;">
+                <button onclick="revealFinalSurprise()" id="revealSurpriseBtn" data-aos="zoom-in">One Last Surprise 💌</button>
+            </div>
+            
+            <div id="finalContent" class="hidden">
+                <h1 class="cursive" style="font-size: clamp(60px, 10vw, 80px); text-align: center; margin: 50px 0;" data-aos="fade-down">A Special Memory</h1>
+                
+                <div class="video-wrapper" data-aos="zoom-in">
+                    <video id="finalVideo" controls playsinline width="100%">
+                        <source src="video.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="cursive glass-card" style="font-size: 2.2rem; text-align: center; margin: 50px auto; max-width: 800px;" data-aos="fade-up">
+                    No matter where life takes us, I will always be there for you 🤍✨
+                </div>
+
+                <div class="glass-card" style="max-width: 600px; margin: 40px auto; text-align: center;" data-aos="fade-up">
+                    <h2 class="heading-bold" style="font-size: 1.8rem; margin-bottom: 15px;">Make a Wish 🎂</h2>
+                    <p style="margin-bottom: 35px; opacity: 0.8;">Close your eyes, think of your biggest dream...</p>
+                    <button onclick="makeWish()">Blow Candles 🌬️🕯️</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        AOS.init({ duration: 1000, once: false });
+
+        const audio = document.getElementById("bgMusic");
+
+        function startExperience() {
+            document.getElementById("welcome").classList.add("hidden");
+            document.getElementById("messagePage").classList.remove("hidden");
+            audio.volume = 0.5;
+            audio.play();
+            firecrackers();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function scrollToMemories() {
+            document.getElementById('memories').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function revealFinalSurprise() {
+            document.getElementById("revealSurpriseBtn").style.display = "none";
+            document.getElementById("finalContent").classList.remove("hidden");
+            document.getElementById("finalVideo").play();
+            firecrackers();
+            setTimeout(() => {
+                document.getElementById("finalContent").scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function makeWish() {
+            alert('Wish made! May all your beautiful dreams come true 🎀✨');
+            firecrackers();
+            setTimeout(firecrackers, 500);
+            setTimeout(firecrackers, 1000);
+        }
+
+        function firecrackers() {
+            const end = Date.now() + 2000;
+            const colors = ['#ff6b8b', '#ffd700', '#ffffff', '#ff1493'];
+            (function frame() {
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function startContinuousConfetti() {
+            var myCanvas = document.getElementById('bgConfetti');
+            var myConfetti = confetti.create(myCanvas, { resize: true, useWorker: true });
+            function frame() {
+                myConfetti({
+                    particleCount: 1,
+                    startVelocity: 0,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 },
+                    colors: ['#ffb6c1', '#ffffff', '#ffd700'],
+                    gravity: 0.4,
+                    scalar: 0.7,
+                    drift: Math.random() - 0.5
+                });
+                requestAnimationFrame(frame);
+            }
+            frame();
+        }
+        startContinuousConfetti();
+    </script>
+</body>
+</html>
